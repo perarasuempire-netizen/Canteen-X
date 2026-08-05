@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Edit Owner</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static',filename='admin.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Edit Owner</h1>
+
+<form action="/update_owner/{{ owner.id }}" method="POST">
+
+<input
+type="text"
+name="username"
+value="{{ owner.username }}"
+required>
+
+<input
+type="text"
+name="password"
+value="{{ owner.password }}"
+required>
+
+<button type="submit">
+
+Update Owner
+
+</button>
+
+</form>
+
+<br>
+
+<a href="/owners">
+
+<button>
+
+Back
+
+</button>
+
+</a>
+
+</div>
+
+</body>
+
+</html>
