@@ -1,0 +1,7 @@
+Flask
+gunicorn
+mysql-connector-python
+razorpay
+qrcode
+Pillow
+python-dotenv
