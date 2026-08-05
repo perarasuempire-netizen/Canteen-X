@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Food Menu</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='menu.css') }}">
+
+</head>
+
+<body>
+
+<div class="navbar">
+
+<h1>🍽 Available Food Items</h1>
+
+<a href="/student">
+<button>Back</button>
+</a>
+
+</div>
+
+<div class="menu-container">
+
+{% for food in foods %}
+
+<div class="food-card">
+
+    <h2>{{ food.food_name }}</h2>
+
+    <p>
+        Category:
+        {{ food.category }}
+    </p>
+
+    <p>
+        Price:
+        ₹{{ food.price }}
+    </p>
+
+    <p>
+        Status:
+        {{ food.availability }}
+    </p>
+
+<form action="/place_order/{{ food.id }}"
+      method="POST">
+
+    <input type="number"
+           name="quantity"
+           value="1"
+           min="1"
+           required>
+
+    <button type="submit">
+        Order Now
+    </button>
+    
+
+</form>
+
+</div>
+
+{% endfor %}
+
+
+
+</div>
+
+</body>
+</html>
