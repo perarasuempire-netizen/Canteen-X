@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Manage Students</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='students.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>👨‍🎓 Manage Students</h1>
+
+<h2>Add Student</h2>
+
+<form action="/add_student" method="POST">
+
+<input
+type="text"
+name="reg_no"
+placeholder="Register Number"
+required>
+
+<input
+type="text"
+name="student_name"
+placeholder="Student Name"
+required>
+
+<input type="text" name="dob" placeholder="DD/MM/YYYY" required>
+
+<button type="submit">
+
+Add Student
+
+</button>
+
+</form>
+
+<br>
+
+<table>
+
+<tr>
+
+<th>ID</th>
+<th>Register No</th>
+<th>Name</th>
+<th>Date of Birth</th>
+<th>Action</th>
+
+</tr>
+
+{% for student in students %}
+
+<tr>
+
+<td>{{ student.id }}</td>
+
+<td>{{ student.reg_no }}</td>
+
+<td>{{ student.name }}</td>
+
+<td>{{ student.dob }}</td>
+
+<td>
+
+<a href="/edit_student/{{ student.id }}">
+
+<button>Edit</button>
+
+</a>
+
+<a href="/delete_student/{{ student.id }}">
+
+<button>Delete</button>
+
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<br>
+
+<a href="/admin">
+
+<button>
+
+⬅ Back to Dashboard
+
+</button>
+
+</a>
+
+</div>
+
+</body>
+
+</html>
