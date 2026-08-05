@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Orders</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='my_orders.css') }}">
+
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+    <div class="page-header">
+
+        <div>
+            <h1>🍽 My Orders</h1>
+            <p>Track your food orders and payment status</p>
+        </div>
+
+        <a href="/student">
+            <button class="back-btn">
+                ← Back to Dashboard
+            </button>
+        </a>
+
+    </div>
+
+
+    <!-- Orders Card -->
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+            <tr>
+
+                <th>Order ID</th>
+                <th>Food Item</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th>Order Status</th>
+                <th>Payment</th>
+
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for order in orders %}
+
+            <tr>
+
+                <td>#{{ order.id }}</td>
+
+                <td>{{ order.food_name }}</td>
+
+                <td>{{ order.quantity }}</td>
+
+                <td>₹{{ order.total_price }}</td>
+
+
+                <!-- ORDER STATUS -->
+
+                <td>
+
+                    {% if order.status == 'Pending' %}
+
+                        <span class="status pending">
+                            ⏳ Waiting for Approval
+                        </span>
+
+                    {% elif order.status == 'Accepted' %}
+
+                        <span class="status accepted">
+                            ✅ Accepted
+                        </span>
+
+                    {% elif order.status == 'Delivered' %}
+
+                        <span class="status delivered">
+                            🚚 Delivered
+                        </span>
+
+                    {% else %}
+
+                        <span class="status rejected">
+                            ❌ Rejected
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+
+                <!-- PAYMENT -->
+
+                <td>
+
+                    {% if order.payment_status == 'PAID' %}
+
+                        <span class="paid-badge">
+
+                            ✔ Paid
+
+                        </span> 
+                                <a href="/ticket/{{ order.id }}">
+
+                                <button>
+
+                                      🎫 View Ticket
+
+                                 </button>
+
+                                </a>
+
+                    {% elif order.status == 'Rejected' %}
+
+                        <span class="rejected-badge">
+
+                            Payment Not Required
+
+                        </span>
+
+                    {% else %}
+
+                        <button
+                            class="pay-btn"
+                            onclick="payOrder({{ order.id }})">
+
+                            💳 Pay Now
+
+                        </button>
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+            {% else %}
+
+            <tr>
+
+                <td colspan="6">
+
+                    <div class="empty-orders">
+
+                        📦
+
+                        <br><br>
+
+                        No Orders Found
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<!-- RAZORPAY CHECKOUT -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+
+<script>
+
+function payOrder(orderId)
+{
+    console.log("Canteen Order ID:", orderId);
+
+
+    // =========================================
+    // STEP 1 - CREATE RAZORPAY ORDER
+    // =========================================
+
+    fetch('/create_payment/' + orderId)
+
+    .then(response =>
+    {
+        if (!response.ok)
+        {
+            throw new Error(
+                "Unable to create Razorpay order"
+            );
+        }
+
+        return response.json();
+    })
+
+
+    .then(data =>
+    {
+
+        console.log("Payment order created:", data);
+
+
+        // =====================================
+        // STEP 2 - RAZORPAY OPTIONS
+        // =====================================
+
+        var options =
+        {
+
+            key: data.key,
+
+            amount: data.amount,
+
+            currency: "INR",
+
+            name: "Canteen X",
+
+            description: "Food Order Payment",
+
+            order_id: data.order_id,
+
+
+            // =================================
+            // STEP 3 - PAYMENT SUCCESS
+            // =================================
+
+            handler: function(response)
+            {
+
+                console.log(
+                    "Razorpay Payment ID:",
+                    response.razorpay_payment_id
+                );
+
+                console.log(
+                    "Razorpay Order ID:",
+                    response.razorpay_order_id
+                );
+
+
+                // =============================
+                // STEP 4 - VERIFY PAYMENT
+                // =============================
+
+                fetch('/verify_payment',
+                {
+                    method: 'POST',
+
+                    headers:
+                    {
+                        'Content-Type':
+                        'application/json'
+                    },
+
+                    body: JSON.stringify(
+                    {
+                        canteen_order_id:
+                            orderId,
+
+                        razorpay_payment_id:
+                            response.razorpay_payment_id,
+
+                        razorpay_order_id:
+                            response.razorpay_order_id,
+
+                        razorpay_signature:
+                            response.razorpay_signature
+                    })
+                })
+
+
+                .then(res =>
+                {
+                    if (!res.ok)
+                    {
+                        throw new Error(
+                            "Server verification error"
+                        );
+                    }
+
+                    return res.json();
+                })
+
+
+                .then(result =>
+                {
+
+                    console.log(
+                        "Verification result:",
+                        result
+                    );
+
+
+                    // =========================
+                    // PAYMENT VERIFIED
+                    // =========================
+
+                    if (result.status === "success")
+                    {
+
+                        alert(
+                            "Payment Successful!\n" +
+                            "Waiting for owner approval."
+                        );
+
+                        // Reload My Orders
+                        window.location.reload();
+
+                    }
+
+
+                    // =========================
+                    // VERIFICATION FAILED
+                    // =========================
+
+                    else
+                    {
+
+                        alert(
+                            "Payment Verification Failed!"
+                        );
+
+                    }
+
+                })
+
+
+                .catch(error =>
+                {
+
+                    console.error(
+                        "Verification Error:",
+                        error
+                    );
+
+                    alert(
+                        "Payment verification error."
+                    );
+
+                });
+
+            },
+
+
+            // =================================
+            // CHECKOUT APPEARANCE
+            // =================================
+
+            theme:
+            {
+                color: "#3399cc"
+            }
+
+        };
+
+
+        // =====================================
+        // STEP 5 - OPEN RAZORPAY
+        // =====================================
+
+        var razorpay =
+            new Razorpay(options);
+
+        razorpay.open();
+
+
+        // =====================================
+        // PAYMENT FAILURE
+        // =====================================
+
+        razorpay.on(
+            'payment.failed',
+            function(response)
+            {
+
+                console.error(
+                    "Payment failed:",
+                    response.error
+                );
+
+                alert(
+                    "Payment Failed!\n" +
+                    response.error.description
+                );
+
+            }
+        );
+
+    })
+
+
+    // =========================================
+    // CREATE PAYMENT ERROR
+    // =========================================
+
+    .catch(error =>
+    {
+
+        console.error(
+            "Create Payment Error:",
+            error
+        );
+
+        alert(
+            "Unable to create payment."
+        );
+
+    });
+
+}
+
+</script>
+
+</body>
+
+</html>
