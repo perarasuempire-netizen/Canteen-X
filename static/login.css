@@ -1,0 +1,157 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+.background{
+    position:fixed;
+    width:100%;
+    height:100%;
+
+    background:url("https://storage.googleapis.com/leye_bucket/wp-content/uploads/d772cdd9-rpm-italian_large-format-catering-5000.jpg");
+    background-size:cover;
+    background-position:center;
+
+    filter:blur(5px);
+    transform:scale(1.1);
+
+    z-index:-2;
+}
+
+.background::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,.35);
+}
+
+.login-container{
+    width:430px;
+    padding:35px;
+
+    background:rgba(0, 0, 0, 0.685);
+
+    backdrop-filter:blur(20px);
+
+    border-radius:25px;
+
+    border:1px solid rgba(255,255,255,.2);
+
+    color:white;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.3);
+}
+
+.logo-section{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.logo-section h1{
+    font-size:30px;
+}
+
+.role-selector{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.role-btn{
+    flex:1;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    background:rgba(255,255,255,.15);
+
+    color:white;
+}
+
+.role-btn.active{
+    background:white;
+    color:#2563eb;
+    font-weight:600;
+}
+
+.input-group{
+    margin-bottom:15px;
+}
+
+.input-group label{
+    display:block;
+    margin-bottom:6px;
+}
+
+.input-group input{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    outline:none;
+    background:rgba(255,255,255,.15);
+    color:white;
+}
+
+.password-box{
+    position:relative;
+}
+
+.password-box span{
+    position:absolute;
+    top:50%;
+    right:15px;
+    transform:translateY(-50%);
+    cursor:pointer;
+}
+
+.login-btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:white;
+    color:#2563eb;
+    font-weight:600;
+    cursor:pointer;
+}
+
+#errorMsg{
+    color:#ff7b7b;
+    text-align:center;
+    margin-bottom:10px;
+}
+
+#successMsg{
+    color:#90ee90;
+    text-align:center;
+    margin-bottom:10px;
+}
+
+@media(max-width:500px){
+
+.login-container{
+    width:92%;
+}
+
+.role-selector{
+    flex-direction:column;
+}
+
+}
+
