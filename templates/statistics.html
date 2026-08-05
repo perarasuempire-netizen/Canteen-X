@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Statistics</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static',
+          filename='statistics.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>📊 Canteen Statistics</h1>
+
+    <div class="stats-container">
+
+        <div class="card">
+            <h2>Total Orders</h2>
+            <h1>{{ total_orders }}</h1>
+        </div>
+
+        <div class="card">
+            <h2>Pending Orders</h2>
+            <h1>{{ pending_orders }}</h1>
+        </div>
+
+        <div class="card">
+            <h2>Accepted Orders</h2>
+            <h1>{{ accepted_orders }}</h1>
+        </div>
+
+        <div class="card">
+            <h2>Total Revenue</h2>
+            <h1>₹{{ revenue }}</h1>
+        </div>
+
+    </div>
+
+    <a href="/owner">
+        <button class="back-btn">
+            ← Back to Dashboard
+        </button>
+    </a>
+
+</div>
+
+</body>
+</html>
