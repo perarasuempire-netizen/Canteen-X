@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Dashboard</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='admin_dashboard.css') }}">
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<div class="navbar">
+
+    <h2>🛠️ Admin Dashboard</h2>
+
+    <button onclick="logout()">
+        Logout
+    </button>
+
+</div>
+
+
+<div class="container">
+
+<!-- ================= DASHBOARD ================= -->
+
+<div class="dashboard">
+
+    <div class="card">
+        <h3>👨‍🎓 Total Students</h3>
+        <h1>{{ total_students }}</h1>
+    </div>
+
+    <div class="card">
+        <h3>🏪 Total Owners</h3>
+        <h1>{{ total_owners }}</h1>
+    </div>
+
+    <div class="card">
+        <h3>📦 Total Orders</h3>
+        <h1>{{ total_orders }}</h1>
+    </div>
+
+    <div class="card">
+        <h3>💰 Amount Received</h3>
+        <h1>₹{{ total_amount }}</h1>
+    </div>
+
+</div>
+
+<!-- ================= MANAGE STUDENTS ================= -->
+
+<div class="section">
+
+    <div class="section-header">
+
+        <h2>👨‍🎓 Manage Students</h2>
+
+        <a href="/students">
+            <button class="green-btn">
+                Manage Students
+            </button>
+        </a>
+
+    </div>
+
+    <p>
+        Add, Edit and Delete student accounts.
+    </p>
+
+</div>
+
+
+<!-- ================= MANAGE OWNERS ================= -->
+
+<div class="section">
+
+    <div class="section-header">
+
+        <h2>🏪 Manage Owners</h2>
+
+        <a href="/owners">
+            <button class="green-btn">
+                Manage Owners
+            </button>
+        </a>
+
+    </div>
+
+    <p>
+        Add, Edit and Delete owner accounts.
+    </p>
+
+</div>
+
+
+</div>
+
+<script src="{{ url_for('static',
+filename='admin_dashboard.js') }}"></script>
+
+</body>
+
+</html>
