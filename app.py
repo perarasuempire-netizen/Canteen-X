@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, session
 from database import get_db_connection
 from flask import jsonify
 import razorpay
-from utils.qr_generator import generate_qr
+from qr_generator import generate_qr
 import os
 from dotenv import load_dotenv
 
