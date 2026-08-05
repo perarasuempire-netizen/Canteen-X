@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Manage Owners</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static',filename='admin.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Manage Owners</h1>
+
+<form action="/add_owner" method="POST">
+
+<input
+type="text"
+name="username"
+placeholder="Username"
+required>
+
+<input
+type="text"
+name="password"
+placeholder="Password"
+required>
+
+<button type="submit">
+
+Add Owner
+
+</button>
+
+</form>
+
+<br>
+
+<table>
+
+<tr>
+
+<th>ID</th>
+<th>Username</th>
+<th>Password</th>
+<th>Edit</th>
+<th>Delete</th>
+
+</tr>
+
+{% for owner in owners %}
+
+<tr>
+
+<td>{{ owner.id }}</td>
+
+<td>{{ owner.username }}</td>
+
+<td>{{ owner.password }}</td>
+
+<td>
+
+<a href="/edit_owner/{{ owner.id }}">
+
+<button style="background:orange;">
+
+Edit
+
+</button>
+
+</a>
+
+</td>
+
+<td>
+
+<a href="/delete_owner/{{ owner.id }}">
+
+<button style="background:red;">
+
+Delete
+
+</button>
+
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<br>
+
+<a href="/admin">
+
+<button>
+
+Back
+
+</button>
+
+</a>
+
+</div>
+
+</body>
+
+</html>
