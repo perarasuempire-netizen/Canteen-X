@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ticket</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='ticket.css') }}">
+
+</head>
+<body>
+
+<div class="ticket">
+
+    <h1>🎫 CANTEEN X</h1>
+    <h2>Food Collection Ticket</h2>
+
+    <hr>
+
+    <div class="details">
+        <p><b>Order ID:</b> {{ order.id }}</p>
+        <p><b>Student:</b> {{ order.student_reg_no }}</p>
+        <p><b>Food:</b> {{ order.food_name }}</p>
+        <p><b>Quantity:</b> {{ order.quantity }}</p>
+        <p><b>Total:</b> ₹{{ order.total_price }}</p>
+    </div>
+
+    <div class="qr-box">
+        <img src="{{ url_for('static', filename='qr/' + image) }}" alt="QR Code">
+    </div>
+
+    <span class="status">✅ Payment Verified</span>
+
+    <p class="note">
+        Show this QR ticket to the canteen owner while collecting your food.
+    </p>
+
+    <a href="/my_orders" class="back-btn">
+        ← Back to My Orders
+    </a>
+
+</div>
+</body>
+</html>
