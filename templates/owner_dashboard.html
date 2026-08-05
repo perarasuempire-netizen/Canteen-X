@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Owner Dashboard</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='owner_dashboard.css') }}">
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<div class="navbar">
+
+    <h2>🏪 Owner Dashboard</h2>
+
+    <button onclick="logout()">Logout</button>
+
+</div>
+<div class="container">
+
+    <!-- First Row -->
+    <div class="top-section">
+
+        <!-- Sales -->
+        <div class="card sales-card">
+
+            <h2>📊 Sales Report</h2>
+
+            <p>View today's sales and statistics.</p>
+
+            <a href="/statistics">
+                <button class="primary-btn">
+                    View Statistics
+                </button>
+            </a>
+
+        </div>
+
+
+        <!-- Add Food -->
+        <div class="card add-card">
+
+            <h2>🍔 Add Food Item</h2>
+
+            <form action="/add_food" method="POST">
+
+                <input type="text"
+                       name="food_name"
+                       placeholder="Food Name"
+                       required>
+
+                <input type="text"
+                       name="category"
+                       placeholder="Category"
+                       required>
+
+                <input type="number"
+                       name="price"
+                       placeholder="Price"
+                       required>
+
+                <button class="primary-btn" type="submit">
+                    Add Food
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- Food Menu -->
+    <div class="table-container">
+
+        <h2>🍽 Food Menu</h2>
+
+        <table>
+
+            <tr>
+
+                <th>ID</th>
+                <th>Food Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Action</th>
+
+            </tr>
+
+            {% for food in foods %}
+
+            <tr>
+
+                <td>{{ food.id }}</td>
+                <td>{{ food.food_name }}</td>
+                <td>{{ food.category }}</td>
+                <td>₹{{ food.price }}</td>
+
+                <td>
+
+                    <form action="/delete_food/{{ food.id }}" method="POST">
+
+                        <button class="delete-btn">
+
+                            Delete
+
+                        </button>
+
+                    </form>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+
+    <!-- Student Orders -->
+    <div class="table-container">
+
+        <h2>📦 Student Orders</h2>
+
+        <table>
+
+            <tr>
+
+                <th>Order ID</th>
+                <th>Student</th>
+                <th>Food</th>
+                <th>Qty</th>
+                <th>Total</th>
+                <th>Payment</th>
+                <th>Status</th>
+                <th>Action</th>
+
+            </tr>
+
+            {% for order in orders %}
+
+            <tr>
+
+                <td>{{ order.id }}</td>
+
+                <td>{{ order.student_reg_no }}</td>
+
+                <td>{{ order.food_name }}</td>
+
+                <td>{{ order.quantity }}</td>
+
+                <td>₹{{ order.total_price }}</td>
+
+                <td>
+
+                    {% if order.payment_status=="PAID" %}
+
+                    <span class="paid">
+
+                        ✅ Paid
+
+                    </span>
+
+                    {% else %}
+
+                    <span class="pending">
+
+                        ❌ Pending
+
+                    </span>
+
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    {% if order.status=="Pending" %}
+
+                    <span class="status-pending">
+
+                        Pending
+
+                    </span>
+
+                    {% elif order.status=="Accepted" %}
+
+                    <span class="status-accepted">
+
+                        Accepted
+
+                    </span>
+
+                    {% elif order.status=="Delivered" %}
+
+                    <span class="status-delivered">
+
+                        Delivered
+
+                    </span>
+
+                    {% else %}
+
+                    <span class="status-rejected">
+
+                        Rejected
+
+                    </span>
+
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    {% if order.status=="Pending" %}
+
+                        {% if order.payment_status=="PAID" %}
+
+                            <a href="/accept_order/{{order.id}}">
+                                <button class="accept-btn">
+                                    Accept
+                                </button>
+                            </a>
+
+                            <a href="/reject_order/{{order.id}}">
+                                <button class="reject-btn">
+                                    Reject
+                                </button>
+                            </a>
+
+                        {% else %}
+
+                            <button disabled>
+
+                                Waiting Payment
+
+                            </button>
+
+                        {% endif %}
+
+                    {% elif order.status=="Accepted" %}
+
+                        <a href="/deliver_order/{{order.id}}">
+                            <button class="deliver-btn">
+                                Delivered
+                            </button>
+                        </a>
+
+                    {% elif order.status=="Delivered" %}
+
+                        <span class="completed">
+
+                            ✔ Completed
+
+                        </span>
+
+                    {% else %}
+
+                        <span class="cancelled">
+
+                            Cancelled
+
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+</div>
+
+
+
+
+
+<script src="{{ url_for('static',
+filename='owner_dashboard.js') }}"></script>
+
+</body>
+</html>
