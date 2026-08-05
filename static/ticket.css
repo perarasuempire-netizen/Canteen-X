@@ -1,0 +1,197 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#eef2ff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:20px;
+}
+
+/* Ticket Card */
+
+.ticket{
+    width:100%;
+    max-width:420px;
+    background:#fff;
+    border-radius:20px;
+    padding:30px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+    border-top:8px solid #16a34a;
+}
+
+/* Logo */
+
+.ticket h1{
+    color:#16a34a;
+    margin-bottom:8px;
+    font-size:32px;
+}
+
+.ticket h2{
+    color:#444;
+    margin-bottom:20px;
+    font-size:22px;
+}
+
+.ticket hr{
+    margin:20px 0;
+    border:none;
+    border-top:2px dashed #ccc;
+}
+
+/* Order Details */
+
+.details{
+    text-align:left;
+    margin-bottom:25px;
+}
+
+.details p{
+    font-size:17px;
+    margin:12px 0;
+    color:#333;
+}
+
+.details b{
+    color:#000;
+}
+
+/* QR Code */
+
+.qr-box{
+    margin:25px 0;
+}
+
+.qr-box img{
+    width:220px;
+    height:220px;
+    border:5px solid #16a34a;
+    border-radius:15px;
+    padding:10px;
+    background:white;
+}
+
+/* Status */
+
+.status{
+    display:inline-block;
+    margin-top:15px;
+    background:#16a34a;
+    color:white;
+    padding:10px 20px;
+    border-radius:25px;
+    font-weight:bold;
+    font-size:15px;
+}
+
+/* Note */
+
+.note{
+    margin-top:20px;
+    color:#666;
+    font-size:14px;
+    line-height:22px;
+}
+
+/* Back Button */
+
+.back-btn{
+    margin-top:25px;
+    display:inline-block;
+    background:#2196f3;
+    color:white;
+    text-decoration:none;
+    padding:12px 25px;
+    border-radius:8px;
+    transition:.3s;
+}
+
+.back-btn:hover{
+    background:#1976d2;
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+.ticket{
+    padding:22px;
+}
+
+.ticket h1{
+    font-size:28px;
+}
+
+.ticket h2{
+    font-size:20px;
+}
+
+.details p{
+    font-size:15px;
+}
+
+.qr-box img{
+    width:180px;
+    height:180px;
+}
+
+.back-btn{
+    width:100%;
+    text-align:center;
+}
+
+}
+
+/* Small Mobile */
+
+@media(max-width:480px){
+
+body{
+    padding:10px;
+}
+
+.ticket{
+    padding:18px;
+    border-radius:15px;
+}
+
+.ticket h1{
+    font-size:24px;
+}
+
+.ticket h2{
+    font-size:18px;
+}
+
+.details p{
+    font-size:14px;
+}
+
+.qr-box img{
+    width:150px;
+    height:150px;
+}
+
+.status{
+    font-size:13px;
+    padding:8px 16px;
+}
+
+.note{
+    font-size:13px;
+}
+
+.back-btn{
+    padding:10px;
+    font-size:15px;
+}
+
+}
