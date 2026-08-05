@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Canteen-X login</title>
+
+<link rel="stylesheet"
+      href="../static/login.css">
+
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<div class="login-container">
+
+    <div class="logo-section">
+        <h1>🍽 Canteen-X</h1>
+        <p>Food Ordering System</p>
+    </div>
+
+    <!-- Role Selector -->
+
+    <div class="role-selector">
+
+        <button type="button"
+                class="role-btn active"
+                onclick="selectRole('student',this)">
+            Student
+        </button>
+
+        <button type="button"
+                class="role-btn"
+                onclick="selectRole('owner',this)">
+            Owner
+        </button>
+
+        <button type="button"
+                class="role-btn"
+                onclick="selectRole('admin',this)">
+            Admin
+        </button>
+
+    </div>
+
+    <!-- Login Form -->
+
+    <form id="loginForm"
+          action="/login"
+          method="POST">
+
+        <!-- Hidden Role -->
+
+        <input type="hidden"
+               id="selectedRole"
+               name="role"
+               value="student">
+
+        <!-- Username -->
+
+        <div class="input-group">
+
+            <label>
+                Register Number / Username
+            </label>
+
+            <input type="text"
+                   id="username"
+                   name="username"
+                   placeholder="Enter Register Number or Username"
+                   autocomplete="off"
+                   required>
+
+        </div>
+
+        <!-- Password -->
+
+        <div class="input-group">
+
+            <label id="passwordLabel">
+                Password (DD/MM/YYYY)
+            </label>
+
+            <div class="password-box">
+
+                <input type="password"
+                       id="password"
+                       name="password"
+                       placeholder="DD/MM/YYYY"
+                       required>
+
+                <span id="togglePassword">
+                    👁
+                </span>
+
+            </div>
+
+        </div>
+
+        <!-- Messages -->
+
+        <div id="errorMsg"></div>
+
+        <div id="successMsg"></div>
+
+        <!-- Login Button -->
+
+        <button type="submit"
+                class="login-btn">
+
+            Login
+
+        </button>
+
+    </form>
+
+</div>
+
+<script src="../static/login.js"></script>
+
+</body>
+</html>
