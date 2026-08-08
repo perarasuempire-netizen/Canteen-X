@@ -1,16 +1,16 @@
 import qrcode
-import os
+import io
+import base64
 
 def generate_qr(order_id):
-    # Your deployed Render URL
-    verify_url = f"https://canteen-x.onrender.com/verify-order/{order_id}"
 
-    folder = "static/qr"
-    os.makedirs(folder, exist_ok=True)
-
-    path = os.path.join(folder, f"ticket_{order_id}.png")
+    verify_url = f"https://canteen-x.onrender.com/verify_ticket/{order_id}"
 
     qr = qrcode.make(verify_url)
-    qr.save(path)
 
-    return f"/static/qr/ticket_{order_id}.png"
+    buffer = io.BytesIO()
+    qr.save(buffer, format="PNG")
+
+    qr_base64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
+
+    return f"data:image/png;base64,{qr_base64}"
