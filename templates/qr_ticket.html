@@ -30,7 +30,10 @@ href="{{ url_for('static', filename='ticket.css') }}">
     </div>
 
     <div class="qr-box">
-        <img src="{{ url_for('static', filename='qr/' + image) }}" alt="QR Code">
+        <img src="{{ url_for('static', filename=image) }}"
+          alt="QR Code"
+             width="200"
+             height="200">
     </div>
 
     <span class="status">✅ Payment Verified</span>
