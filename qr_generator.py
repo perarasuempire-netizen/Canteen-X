@@ -2,15 +2,13 @@ import qrcode
 import os
 
 def generate_qr(order_id):
-
-    url = f"http://172.16.117.44:5000/verify_ticket/{order_id}"
-
-    qr = qrcode.make(url)
+    folder = os.path.join("static", "qr")
+    os.makedirs(folder, exist_ok=True)
 
     filename = f"ticket_{order_id}.png"
+    path = os.path.join(folder, filename)
 
-    path = os.path.join("static", "qr", filename)
-
+    qr = qrcode.make(str(order_id))
     qr.save(path)
 
-    return filename
+    return f"qr/{filename}"
