@@ -527,7 +527,7 @@ def create_payment(order_id):
     return jsonify({
         "order_id": razorpay_order['id'],
         "amount": amount,
-        "key": RAZORPAY_KEY_ID
+        "key": rzp_test_TLf997naPo8AsG
     })
 
 @app.route('/verify_payment', methods=['POST'])
