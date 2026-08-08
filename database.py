@@ -2,9 +2,10 @@ import mysql.connector
 
 def get_db_connection():
     conn = mysql.connector.connect(
-        host="localhost",
+        host="maglev.proxy.rlwy.net",
+        port=41955,
         user="root",
-        password="empire,empire03",
-        database="canteen_db"
+        password="mFMSJGsxIfgCUCxuMWXBXivqIwZncnpX",
+        database="railway"
     )
     return conn
